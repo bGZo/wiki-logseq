@@ -1,0 +1,347 @@
+; this config.edn refer those:
+; https://github.com/logseq/logseq/blob/master/src/resources/templates/config.edn
+; https://gist.github.com/tallguyjenks/6afc75e52a3d52d475b9df9dafdecfd2
+; https://gist.github.com/tiensonqin/d871dcba33c4be460fabb3add0840276
+
+{:meta/version 1
+
+ :preferred-format "Markdown"
+
+ :preferred-workflow :todo
+
+ :hidden [ "/utils" ]
+
+ :default-templates {
+        :journals "daily"
+        :pages "page" ;; wish one day could be supported.
+ }
+
+ :journal/page-title-format "yyyyMMdd"
+
+ :journal/file-name-format "yyyyMMdd"
+
+ :ui/enable-tooltip? true
+
+ :ui/show-brackets? false
+
+ :ui/show-full-blocks? true
+
+ :ui/auto-expand-block-refs? true
+
+ :feature/enable-block-timestamps? false
+
+ :feature/enable-search-remove-accents? true
+
+ :feature/enable-journals? true
+
+ :feature/enable-whiteboards? true
+
+ :feature/enable-flashcards? true
+
+ :feature/disable-scheduled-and-deadline-query? true
+
+ :scheduled/future-days 14
+
+ :start-of-week 6
+
+ ;; :custom-css-url "@import url('');"
+
+ ;; :custom-js-url ""
+
+ ;; :arweave/gateway "https://arweave.net"
+ ;; via: https://www.reddit.com/r/logseq/comments/1apvfht/arweave_whats_that/
+
+ :export/bullet-indentation :two-spaces
+
+ :publishing/all-pages-public? true
+
+ :default-home {
+        :page "Contents",
+        :sidebar ["Contents"]
+ }
+
+ :pages-directory "pages"
+
+ :journals-directory "journals"
+
+ :whiteboards-directory "whiteboards"
+
+ :shortcuts {}
+
+ :shortcut/doc-mode-enter-for-new-block? false
+
+ :block/content-max-length 20000
+
+ :ui/show-command-doc? true
+
+ :ui/show-empty-bullets? false
+
+ :query/views
+ {:pprint
+  (fn [r] [:pre.code (pprint r)])}
+
+ :query/result-transforms
+ {:sort-by-priority
+  (fn [result] (sort-by (fn [h] (get h :block/priority "Z")) result))}
+
+ :default-queries
+ {:journals[
+            ;; the "NOW" query asks the tasks which need to be finished "now",
+            {:title "🔨 NOW"
+             :query [:find (pull ?h [*])
+                     ;:in $ ?start ?today
+                     :where
+                     [?h :block/marker ?marker]
+                     [(contains? #{"NOW" "DOING"} ?marker)]
+                     ;[?h :block/page ?p]
+                     ;[?p :block/journal? true]
+                     ;[?p :block/page? true]
+                     ;[?p :block/journal-day ?d]
+                     ;[(>= ?d ?start)]
+                     ;[(<= ?d ?today)]
+                    ]
+             ;:inputs [:3650d :today]
+             :result-transform (fn [result]
+                                 (sort-by (fn [h]
+                                            (get h :block/priority "Z")) result))
+             :breadcrumbs-show? true
+             :collapsed? true}
+
+            ;; the "NEXT" query asks the future tasks.
+            {:title "📅 NEXT"
+             :query [:find (pull ?b [*])
+                     ;:in $ ?start ?next
+                     :where
+                     [?h :block/marker ?marker]
+                     [(contains? #{"NOW" "LATER" "TODO"} ?marker)]
+                     [?h :block/page ?p]
+                     [?p :block/journal? true]
+                     [?p :block/journal-day ?d]
+                     ;[(> ?d ?start)]
+                     ;[(< ?d ?next)]
+                     ]
+             ;:inputs [:today :3650d-after]
+             :breadcrumbs-show? true
+             :collapsed? false}
+
+            {:title "🗓️ Scheduled"
+             :query [:find (pull ?b [*])
+                     :in $ ?next
+                     :where
+                     (task ?b #{"NOW" "LATER" "TODO" "DOING" "WAIT" "WAITING"})
+                     (not (property ?b :tags "Routine"))
+                     (or-join [?b ?d]
+                              [?b :block/scheduled ?d])
+                     [(<= ?d ?next)]]
+             :inputs [:today]
+             :result-transform (fn [result]
+                                 (sort-by (fn [h]
+                                            (get h :block/scheduled)) result))
+             :breadcrumbs-show? true
+             :collapsed? true}
+
+            {:title "🔥 OVERDUE"
+             :query [:find (pull ?b [*])
+                     ;:in $ ?start ?today
+                     :where
+                     (task ?b #{"NOW" "TODO"})
+                     (not [?b :block/scheduled ?d])
+                     (not [?b :block/deadline ?d])
+                     ;(between ?b ?start ?today)
+                     ]
+             ;:inputs [:-3650d :today]
+             :breadcrumbs-show? true
+             :collapsed? true}
+            ]}
+
+ :commands[
+           ;; without plugin dependencies, need to restart logseq
+           ;; via: https://github.com/logseq/logseq/discussions/7976
+           ["prefix/bilibili" "https://www.bilibili.com/video/"]
+           ["prefix/youtube" "https://youtube.com/watch?v="]
+           ["prefix/github" [[:editor/input "https://raw.githubusercontent.com//main/" {:backward-pos 6}]]]
+           ["prefix/github/cdn" [[:editor/input "https://rawcdn.githack.com//main/" {:backward-pos 6}]]]
+           ["iframe" [[:editor/input "{{iframe ,40vh,iframe-radius}}" {:backward-pos 21}]]]
+           ["iframe/steam" [[:editor/input "{{iframe https://store.steampowered.com/widget/ ,200px}}" {:backward-pos 9}]]]
+           ;; ["python code" [[:editor/input "```python\n\n```" {:backward-pos 4}]]]
+           ;; ["cpp code" [[:editor/input "```cpp\n\n```" {:backward-pos 4}]]]
+           ;; ["java code" [[:editor/input "```java\n\n```" {:backward-pos 4}]]]
+           ;; ["shell code" [[:editor/input "```shell\n\n```" {:backward-pos 4}]]]
+           ;; https://discuss.logseq.com/t/macros-and-commands-lets-share/9565
+           ;; https://discuss.logseq.com/t/wish-add-the-code-block-by-using/12681
+           ;; https://github.com/logseq/logseq/issues/9198
+
+          ]
+
+ :outliner/block-title-collapse-enabled? false ;; NOTE: the prefermance of logseq will be slowed down.
+
+ :macros {
+       "iframe" "<iframe src='$1' style='height:$2' class='$3' allow='fullscreen'/><div class='text-center'>via: <a href='$1' target='_blank' class='external-link'>$1</a></div>"
+
+       "nav" "<img class='inline-left-tag' src='https://img.shields.io/website.svg?label=&cacheSeconds=7200&url=$1'/><a href='$1' target='_blank' class='external-link'>$1</a>"
+       "nav-ri" "<a href='$1' target='_blank' class='external-link'>$1</a><img class='inline-right-tag' src='https://img.shields.io/website.svg?label=&cacheSeconds=7200&url=$1'/>"
+       "navi" "<img class='inline-left-tag' src='https://img.shields.io/website.svg?label=&cacheSeconds=7200&url=$2'/><a href='$2' target='_blank' class='external-link'>$1</a>"
+       "navi-ri" "<a href='$2' target='_blank' class='external-link'>$1</a><img class='inline-left-tag' src='https://img.shields.io/website.svg?label=&cacheSeconds=7200&url=$2'/>"
+
+       "gh" "<a href='https://github.com/$1' target='_blank' class='external-link'>https://github.com/$1</a><img class='inline-right-tag' src='https://img.shields.io/github/stars/$1'/>"
+       "tg" "https://t.me/$1 <a href='tg://resolve?domain=$1' target='_blank' class='external-link'>🚀</a>"
+       "bangumi" "https://bgm.tv/subject/$1"
+       "myanimelist" "https://myanimelist.net/anime/$1"
+       "doufilm" "https://book.douban.com/subject/$1"
+       "dougame" "https://www.douban.com/game/$1"
+       "doubook" "https://book.douban.com/subject/$1"
+       "weread" "https://weread.qq.com/web/bookDetail/$1"
+       "image/cover" "![]($1){:width 100}"
+       "am" "<iframe allow='autoplay *; encrypted-media *;' frameborder='0' height='450' style='width:100%;max-width:660px;overflow:hidden;background:transparent;' sandbox='allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation' src='https://embed.music.apple.com/cn/album/$1' />"
+
+       ;; wish one day could support
+       ;;"ghgist" "<script src='https://gist.github.com/bGZo/$1.js'></script>"
+
+       }
+
+
+ :ref/default-open-blocks-level 2
+
+ :ref/linked-references-collapsed-threshold 10
+
+ :graph/settings {:orphan-pages? true
+ :builtin-pages? false
+ :excluded-pages? false
+ :journal? false}
+
+ :graph/forcesettings {
+        :link-dist       180
+        :charge-strength -600
+        :charge-range    600
+ }
+
+ :favorites ["announcements" "issue" "dashboard" "musics" "navigation" "writings" "hobbies" "tools" "omnivore" "2022 archive" "history/burden" "hecaitou" "networking" "postgresql修炼之道" "blogroll"]
+
+;; :srs/learning-fraction 0.5
+
+;; :srs/initial-interval 4
+
+ :block-hidden-properties #{
+                            :public 
+                            ;:title 
+                            ;:icon 
+                            ;:created
+                            }
+
+ :property-pages/enabled? true
+
+:property-pages/excludelist #{
+                              :TODO
+                              :DOING
+                              :DONE
+                              :WAITING
+                              ;:duration :author
+                              ;:tags
+                              :icon
+                              :also
+                              :author
+                              :cover
+                              :created
+                              :description
+                              ;:exclude-from-graph-view
+                              :isbn
+                              :lang
+                              :published
+                              :published-date
+                              :rating
+                              :schema
+                              :source
+                              :status
+                              :title
+                              :template
+                              :template-including-parent
+                              :type
+
+                              :bangumi
+                              :douban
+                              :weread
+                              :wikipedia
+                              :.ol
+                              :.kanban
+                              :.kanban-500
+
+
+                              :药品名称
+                              :成份
+                              :性状
+                              :作用类别
+                              :适应症
+                              :规格
+                              :用法用量
+                              :不良反应
+                              :禁忌
+                              :注意事项
+                              :药物相互作用
+                              :药理作用
+                              :贮藏
+                              :包装
+                              :有效期
+                              :执行标准
+                              :批准文号
+                              :说明书修订日期
+                              :生产企业名称
+                              :生产地址
+       }
+
+:property/separated-by-commas #{
+       ;:alias :tags :also
+       }
+
+:ignored-page-references-keywords #{
+       ;:author :website
+                                    :tags
+                                    }
+ 
+;; :logbook/settings
+;; {:with-second-support? false ;limit logbook to minutes, seconds will be eliminated
+;;  :enabled-in-all-blocks true ;display logbook in all blocks after timetracking
+;;  :enabled-in-timestamped-blocks false ;don't display logbook at all
+;; }
+
+;; :mobile/photo
+;; {:allow-editing? true
+;;  :quality        80}
+
+;; :mobile
+;; {:gestures/disabled-in-block-with-tags ["kanban"]}
+
+ :editor/extra-codemirror-options {
+        :lineWrapping   false  ; when code is long, read really sucks 
+        :lineNumbers    true
+        :readOnly       false
+        ;:theme "rdark"
+ }
+
+ :editor/logical-outdenting? true
+
+ :editor/preferred-pasting-file? false
+
+;; :quick-capture-templates
+;; {:text "[[quick capture]] **{time}**: {text} from {url}"
+;;  :media "[[quick capture]] **{time}**: {url}"}
+
+;; :quick-capture-options
+;; {:insert-today? false           ;; Default value: true
+;;  :redirect-page? false          ;; Default value: false
+;;  :default-page "quick capture"} ;; Default page: "quick capture"
+
+;; File sync options
+;; Ignore these files when syncing, regexp is supported.
+;; :file-sync/ignore-files []
+
+;; :dwim/settings
+;; {:admonition&src?  true        ;; Default value: true
+;;  :markup?          false       ;; Default value: false
+;;  :block-ref?       true        ;; Default value: true
+;;  :page-ref?        true        ;; Default value: true
+;;  :properties?      true        ;; Default value: true
+;;  :list?            false}      ;; Default value: false
+
+ :file/name-format :triple-lowbar
+
+ }

@@ -1,0 +1,30 @@
+on: [push]
+
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Publish Logseq graph
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: false
+
+      - uses: logseq/publish-spa@main
+        with:
+          output-directory: www
+          accent-color: grass
+
+      # to make sure asset paths are correctly identified
+      - name: Add a nojekyll file
+        run: touch www/.nojekyll
+
+      # Inject custom scripts
+      - name: Inject Script 💬
+        run: sed -i "s@</body>@$( cat logseq/inject.html | tr '\n' ' ' | sed 's@&@\\&@g' )</body>@"  www/index.html
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: www
