@@ -1,0 +1,218 @@
+@import url('https://gistcdn.githack.com/bGZo/8df460ec380a5bd4385cb8225e894cf0/raw/8fc9f15b8f8b652119bfa15e92740d6cf9b6ae32/7.propsLayout.custom.css');
+@import url('https://rawcdn.githack.com/yoyurec/logseq-awesome-content/main/src/modules/admonition/admonition.css');
+@import url('https://rawcdn.githack.com/yoyurec/logseq-awesome-content/main/src/modules/quotes/quotes.css');
+@import url('https://rawcdn.githack.com/yoyurec/logseq-awesome-content/main/src/modules/tasks/tasks.css');
+@import url('https://rawcdn.githack.com/yoyurec/logseq-awesome-content/main/src/modules/code/code.css');
+@import url("https://raw.githack.com/yoyurec/logseq-awesome-content/main/src/modules/columns/columns.css");
+@import url("https://raw.githack.com/yoyurec/logseq-awesome-content/main/src/modules/todayQueries/todayQueries.css");
+@import url("https://raw.githack.com/yoyurec/logseq-awesome-content/main/src/modules/breadcrumbs/breadcrumbs.css");
+
+/**
+ * feat: with right layout ability
+ * via: https://discuss.logseq.com/t/align-text-images-etc-to-the-right-workaround/13375
+ */
+.ra{
+  float: right;
+}
+
+/**
+ * fix: hide the help button
+ */
+ .cp__sidebar-help-btn {
+  display:none;
+}
+
+/**
+ * fix: props margin too short.
+ */
+.block-properties > div > :is(div, span, a):first-child {
+  width: calc(100% + 1.4rem);
+}
+.block-properties .page-property-value {
+  margin-left: 2rem;
+}
+.block-properties > div > div {
+  display: block !important;
+}
+.block-properties:not(.page-properties) > div > :is(div, span, a):first-child:after, .block-properties.page-properties > div > :is(div, span, a):first-child:after, .ls-block.ls-block.block-properties > div > :is(div, span, a):first-child:after {
+  display: inline;
+  margin: 0;
+  float: right;
+}
+
+
+/**
+ * feat: table wrap style by tag
+ */
+a.tag[data-ref*="config/table-wrap"] {
+    display: none;
+}
+[data-refs-self*="config/table-wrap"] .whitespace-nowrap {
+  white-space: wrap;
+}
+
+
+/**
+ * style[required]: custom horizontal rule.
+ */
+hr {
+  /* border-color: var(--); */
+  margin: 1rem 0;
+}
+
+
+/**
+ * style: custom color schame
+ */
+:root {
+  --usuao: #91B493;
+  --aoni: #516E41;
+  --ls-tag-text-opacity: .7;
+  --ls-highlight-color: var(--usuao);
+  --ls-highlight-text-color: var(--aoni);
+  --ls-link-text-color: var(--aoni);
+}
+.light-theme, html[data-theme="light"]{
+  --ls-tag-background-hover: var(--color-level-1);
+  --ls-page-blockquote-border-color: var(--ls-highlight-color);
+  --ls-page-blockquote-bg-color: var(--color-level-3);
+  --ls-page-mark-bg-color: var(--ls-highlight-color);
+  --ls-page-properties-background-color: var(--color-level-3);
+}
+
+@media (prefers-color-scheme: light) {
+  /**
+   * fix: overwrite build-in css
+   * link: http://unpkg.com/bgzo/img/texture.png
+   */
+  #app-container, #main-container {
+    background-image: url(http://unpkg.com/bgzo/img/texture.png);
+    background-repeat: repeat;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark-theme, html[data-theme="dark"]{
+    --ls-tag-background-hover: var(--color-level-1);
+    --ls-page-blockquote-border-color: var(--ls-highlight-color);
+    --ls-page-blockquote-bg-color: var(--color-level-3);
+    --ls-page-mark-bg-color: var(--ls-highlight-color);
+    --ls-page-properties-background-color: var(--color-level-3);
+  }
+  img {
+    filter: brightness(.80) contrast(1.1);
+  }
+  ::selection {
+    background:#d3d3d3;
+    color:#555;
+  }
+  blockquote, .ls-block[data-refs-self*="\"quote\""]:not(.pre-block) {
+    background-color: var(--lx-gray-05-alpha);
+    border-left: 4px solid var(--ls-highlight-text-color);
+  }
+  .inline-wrap,
+  .block-content,
+  ol > li > p,
+  .breadcrumb.block-parents > a,
+  .cp__query-builder .cp__select .input-wrap input {
+    color: var(--lx-gray-11);
+  }
+  .cp__query-builder .cp__select .input-wrap input {
+    background: black;
+  }
+  .left-sidebar-inner .nav-content-item .header{
+    background: var(--left-sidebar-bg-color);
+  }
+
+  /**
+   * fix: overwrite build-in css
+   * link: http://unpkg.com/bgzo/img/texture.png
+   */
+  #app-container,#main-container {
+    background-image:
+      linear-gradient(rgba(130, 130, 130, .05) 0.01em, transparent .05em),
+      linear-gradient(90deg, rgba(130, 130, 130, .05) 0.01em, transparent .05em);
+    background-size: 1em 1em;
+    background-attachment: scroll;
+    background-repeat: repeat;
+  }
+
+}
+mark{
+  color: #1e1e1e;
+  code {
+    background-color: var(--ls-highlight-color) !important;
+  }
+  a {
+    color: black !important;
+  }
+}
+.page-ref {
+  color: var(--ls-highlight-text-color);
+}
+
+
+/**
+ * style[required]: custom tag
+ */
+a.tag {
+  display: inline;
+  background: none;
+  border: 1.5px dashed var(--ls-highlight-text-color, #045591);
+  color: var(--ls-highlight-text-color);
+}
+a.tag:active, a.tag:focus, a.tag:hover {
+  outline: none;
+  text-decoration: none;
+}
+
+
+/**
+ * style: hyber link style with underline
+ */
+.external-link {
+  border: 0;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  color: var(--ls-highlight-text-color);
+}
+
+
+/**
+ * style: code mirror
+ */
+.CodeMirror {
+  border-radius: var(--ls-border-radius-low);
+}
+
+
+/**
+ * feat: task cancel text-decoration
+.done {
+  text-decoration: none !important;
+  opacity: var(--ls-tag-text-opacity);
+}
+ */
+
+
+.iframe-radius, .references-blocks-item {
+  --tw-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  border-radius: 0.5rem !important;
+  box-shadow: var(--tw-shadow) !important;
+}
+
+.raw_html {
+  display: inline;
+}
+.inline-left-tag {
+  display: inline;
+  margin-right: .5em;
+}
+.inline-right-tag {
+  display: inline;
+  margin-left: .5em;
+}
+
+.macro {
+    display: inline;
+}
