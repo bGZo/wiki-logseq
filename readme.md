@@ -1,4 +1,8 @@
-## 🧠 bGZo's Second Brain
+---
+exclude-from-graph-view: true
+---
+
+- ## 🧠 bGZo's Second Brain
 - Hello there👋.
 - My nickname is *bGZo*, actual name is *Feng Hua*, you could call me *hua*, or *hx*
 - Wish you have a fun time. That would be my pleasure.
@@ -69,18 +73,23 @@
           collapsed:: true
           - ![](https://raw.githack.com/bGZo/assets/dev/2024/20241011235342.png)
           - ![](https://raw.githack.com/bGZo/assets/dev/2024/20241011235415.png)
+- ## Quick Start
+  - Considered Github Action workflow making the repo size increased, so clone main branch is enough.
+  - ```shell
+    git clone --single-branch -b main git@github.com:bGZo/wiki-logseq.git
+    ```
 - ## 🖥 Rebuild
-- windows
-  ```shell
-  rm "$env:appdata\Logseq" -r
-  ```
+  - windows
+  - ```shell
+    rm "$env:appdata\Logseq" -r
+    ```
 - ## © Copyright
-- Copyright 2022 - 2024 [bGZo](https://github.com/bGZo). All rights reserved. The contents is licensed under a [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/); the code is under [MIT](https://github.com/bGZo/blog/blob/main/LICENSE) licence. The contents and comments are copyright their respective authors, submission implies license to publish on this web site.
-  ![http://creativecommons.org/licenses/by-sa/4.0/](https://i.creativecommons.org/l/by-sa/4.0/88x31.png) ![https://notbyai.fyi/](https://raw.githack.com/bGZo/assets/dev/2024/Written-By-Human-Not-By-AI-Badge-white.svg)
-
-[^alias-should-more-power]: via: https://discuss.logseq.com/t/enhancement-of-aliases/14466, Towards non-native speakers in English, `alias` is a little bit interesting, more aliases makes graph more complex, which links every node duplicately. This is really funciton need to be enhanced.
-[^toc-is-hard-thing]: via: https://discuss.logseq.com/t/outline-overview-for-sidebar/740/20, I choose use namespace instead of content side bar.
-[^maintain-soft-rules]: Maybe the flow you have to change in next version, or the problem maybe solved, it's really not have too much value.
-[^as-non-work-flow]: If you are a student, or someone else, the work could be something you worked for living. Whether they should separate with space time, there are a thousand Hamlets in a thousand people's eyes. At least in China, space time always conflicts with work, so talking about that is always ambiguous...
-[^bug-on-logseq]: https://discuss.logseq.com/t/pasting-photos-increases-the-size-of-the-image-file-massively/9363
-[^namespace-usage]: https://www.logseqmastery.com/blog/logseq-namespaces, https://discuss.logseq.com/t/outline-overview-for-sidebar/740/19
+  - Copyright 2022 - 2024 [bGZo](https://github.com/bGZo). All rights reserved. The contents is licensed under a [CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/); the code is under [MIT](https://github.com/bGZo/blog/blob/main/LICENSE) licence. The contents and comments are copyright their respective authors, submission implies license to publish on this web site.
+  - ![http://creativecommons.org/licenses/by-sa/4.0/](https://i.creativecommons.org/l/by-sa/4.0/88x31.png) ![https://notbyai.fyi/](https://raw.githack.com/bGZo/assets/dev/2024/Written-By-Human-Not-By-AI-Badge-white.svg)
+  ---
+  - [^alias-should-more-power]: via: https://discuss.logseq.com/t/enhancement-of-aliases/14466, Towards non-native speakers in English, `alias` is a little bit interesting, more aliases makes graph more complex, which links every node duplicately. This is really funciton need to be enhanced.
+    [^toc-is-hard-thing]: via: https://discuss.logseq.com/t/outline-overview-for-sidebar/740/20, I choose use namespace instead of content side bar.
+    [^maintain-soft-rules]: Maybe the flow you have to change in next version, or the problem maybe solved, it's really not have too much value.
+    [^as-non-work-flow]: If you are a student, or someone else, the work could be something you worked for living. Whether they should separate with space time, there are a thousand Hamlets in a thousand people's eyes. At least in China, space time always conflicts with work, so talking about that is always ambiguous...
+    [^bug-on-logseq]: https://discuss.logseq.com/t/pasting-photos-increases-the-size-of-the-image-file-massively/9363
+    [^namespace-usage]: https://www.logseqmastery.com/blog/logseq-namespaces, https://discuss.logseq.com/t/outline-overview-for-sidebar/740/19

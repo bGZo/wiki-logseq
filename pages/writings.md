@@ -12,6 +12,8 @@ tags:: writing
 - ## Draft
   query-table:: true
   query-properties:: [:page :icon :created :status :tags :exclude-from-graph-view]
+  query-sort-by:: icon
+  query-sort-desc:: false
   {{query (property :status "writing/draft")}}
 - ## Edit
   collapsed:: true
