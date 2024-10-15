@@ -1,5 +1,5 @@
-also:: 我的恋人, my/soulmate
-tags:: #feminism #Love
+also:: 我的恋人
+tags:: #feminism #love
 created:: [[20230101]]
 
 - ## 几乎是幻想

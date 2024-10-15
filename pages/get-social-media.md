@@ -2,8 +2,9 @@ icon:: 📂
 created:: [[20221231]]
 description:: 社交媒体获取器
 exclude-from-graph-view:: true
-tags:: #twitter, #mastodon
-type:: product/done
+status:: done
+tags:: #twitter, #mastodon, #product
+type:: project
 
 - ## Project Meta
   - CANCELED #project Get social media about Thread.net and Weibo.

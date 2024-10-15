@@ -8,75 +8,64 @@ template-including-parent:: false
   - icon:: 📂
     also:: 
     created:: ``ref(date.now.format('YYYYMMDD'))``
+    deadline:: ``ref(date.now.format('YYYYMMDD'))``
     description:: 
     tags:: 
     type:: ``'project'``
-  - ## Project Meta
-    -``'DOING #project ' + ref(c.page.name)``
-      :LOGBOOK:
-      CLOCK: [2024-07-21 Sun 22:36:48]
-      :END:
-    - query-table:: false
-      #+BEGIN_QUERY
-      {:title [:h3 "Tasks related to``c.page.name``"]
-       :query [:find (pull ?b [*])
-           :in $ ?current-page
-           :where
-           [?p :block/name ?current-page]
-           [?b :block/marker ?marker]
-      [?p :block/alias ?al]
-      (or [?b :block/refs ?p] [?b :block/refs ?al])
-      (or
-           [(= "NOW" ?marker)]
-           [(= "DOING" ?marker)]
-           [(= "WAITING" ?marker)]
-           [(= "LATER" ?marker)]
-      )
-      (not [?b :block/page ?p])
-      ]
-       :inputs [:current-page]
-        :result-transform (fn [result]
-                            (sort-by (fn [b]
-                                       (get b :block/priority "Z")) result))
-        :breadcrumb-show? false
-        :table-view? false
-      }
-      #+END_QUERY
-    - query-table:: false
-      #+BEGIN_QUERY
-      {:title [:h3 "Checklist"]
-       :query (and (todo todo) (page [[``{ c.page.name }``]]))
-        :result-transform (fn [result]
-                            (sort-by (fn [b]
-                                       (get b :block/priority "Z")) result))
-        :breadcrumb-show? false
-        :table-view? false
-      }
-      #+END_QUERY
-  - ## Why
-    -
-  - ## How
-    -
-  - ## What
-    - ### \# Program Description
+  - ## ``'DOING ' + ref(c.page.name)``
+    - ### Description
+      -
       - #### Input
         -
       - #### Output
         -
-    - ### \# Alternatives
-      -
-    - ### \# Notes
-      -
+      - #### Alternatives
+        -
+      - #### Notes
+        -
+  - query-table:: false
+    #+BEGIN_QUERY
+    {:title [:h3 "Tasks related to ``c.page.name``"]
+     :query [:find (pull ?b [*])
+         :in $ ?current-page
+         :where
+         [?p :block/name ?current-page]
+         [?b :block/marker ?marker]
+    [?p :block/alias ?al]
+    (or [?b :block/refs ?p] [?b :block/refs ?al])
+    (or
+         [(= "NOW" ?marker)]
+         [(= "DOING" ?marker)]
+         [(= "WAITING" ?marker)]
+         [(= "LATER" ?marker)]
+    )
+    (not [?b :block/page ?p])
+    ]
+     :inputs [:current-page]
+      :result-transform (fn [result]
+                          (sort-by (fn [b]
+                                     (get b :block/priority "Z")) result))
+      :breadcrumb-show? false
+      :table-view? false
+    }
+    #+END_QUERY
+  - query-table:: false
+    #+BEGIN_QUERY
+    {:title [:h3 "Checklist"]
+     :query (and (todo todo) (page [[``{ c.page.name }``]]))
+      :result-transform (fn [result]
+                          (sort-by (fn [b]
+                                     (get b :block/priority "Z")) result))
+      :breadcrumb-show? false
+      :table-view? false
+    }
+    #+END_QUERY
   - ## ↩ Reference
     -
-- ## Why
-  -
-- ## How
-  -
-- ## What
-  -
-- ## Namespace
-  - {{namespace project}}
-- ## ↩ Reference
-  -
+- ## Project
+  query-sort-by:: type
+  query-sort-desc:: true
+  {{query (or (page-property :type project) (page-property :type "product") (not))}}
+- ## Archives
+  {{query (or (page-property :type project/done) (page-property :type "product/done"))}}
 -

@@ -235,32 +235,33 @@
                               :DOING
                               :DONE
                               :WAITING
-                              ;:duration :author
-                              ;:tags
                               :icon
                               :also
                               :author
+                              :bangumi
                               :cover
                               :created
                               :description
+                              :douban
+                              ;:duration
                               ;:exclude-from-graph-view
                               :isbn
                               :lang
+                              :mark
                               :published
                               :published-date
                               :rating
                               :schema
                               :source
                               :status
-                              :title
+                              ;:tags
                               :template
                               :template-including-parent
+                              :title
                               :type
-
-                              :bangumi
-                              :douban
                               :weread
                               :wikipedia
+
                               :.ol
                               :.kanban
                               :.kanban-500

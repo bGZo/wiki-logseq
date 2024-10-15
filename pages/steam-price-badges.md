@@ -2,7 +2,9 @@ icon:: 📂
 tags:: #steam
 created:: [[20230705]]
 mark:: 使用 iframe 嵌入页面更加简单；
-type:: project/done
+status:: done
+tags:: #product
+type:: project
 
 - ## Project Meta
   - CANCELED #project [[archives/steam price badges]]

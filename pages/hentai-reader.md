@@ -2,8 +2,9 @@ icon:: 📂
 created:: [[20230614]]
 description:: 变态阅读器
 exclude-from-graph-view:: true
+status:: done
 tags:: #rss #[[github action]] #crawler #hentai
-type:: product/done
+type:: product
 
 - ## Project Meta
   - CANCELED #project Hentai Reader
